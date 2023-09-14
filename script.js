@@ -1,84 +1,60 @@
+
 function getComputerChoice() {
     const randomNumber = Math.floor(Math.random() * 3);
     switch (randomNumber) {
         case 0:
-          return 'Rock';
+          return 'rock';
         case 1:
-          return 'Paper';
+          return 'paper';
         case 2:
-          return 'Scissors';
+          return 'scissors';
       }
 }
 
-function playRound(playerSelection, computerSelection){
-    const playerChoice = playerSelection.toLowerCase();
-    const choices = ['rock', 'paper', 'scissors'];
+function playRound(playerChoice, computerSelection){
     const outcomes = {
       rock: { beats: 'scissors', losesTo: 'paper' },
       paper: { beats: 'rock', losesTo: 'scissors' },
       scissors: { beats: 'paper', losesTo: 'rock' },
     };
-    if (!choices.includes(playerChoice) || !choices.includes(computerSelection.toLowerCase())) {
-        return "Invalid selection. Please choose Rock, Paper, or Scissors.";
-    }
-    if (playerChoice === computerSelection.toLowerCase()) {
-        return "It's a tie!";
-      } else if (outcomes[playerChoice].beats === computerSelection.toLowerCase()) {
-        return `You Win! ${playerChoice} beats ${computerSelection}`;
+
+    const resultsDiv = document.getElementById('results');
+    const scoreDiv = document.getElementById('score');
+
+    if (playerChoice === computerSelection) {
+        resultsDiv.textContent = "It's a tie!";
+      } else if (outcomes[playerChoice].beats === computerSelection) {
+        resultsDiv.textContent = `You Win! ${playerChoice} beats ${computerSelection}`;
+        playerScore++;
       } else {
-        return `You Lose! ${computerSelection} beats ${playerChoice}`;
+        resultsDiv.textContent = `You Lose! ${computerSelection} beats ${playerChoice}`;
+        computerScore++;
+    }
+
+    scoreDiv.textContent = `Score: Player ${playerScore} - Computer ${computerScore}`;
+
+    if (playerScore >= winningScore || computerScore >= winningScore) {
+        announceWinner();
     }
 }
 
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-  
-    for (let round = 1; round <= 5; round++) {
-        let playerSelection;
-    
-        // Prompt the user until they enter a valid choice
-        while (true) {
-          playerSelection = prompt(`Round ${round}: Enter Rock, Paper, or Scissors:`);
-          const normalizedInput = playerSelection.toLowerCase();
-    
-          if (normalizedInput === 'rock' || normalizedInput === 'paper' || normalizedInput === 'scissors') {
-            break; // Exit the loop if the input is valid
-          } else {
-            alert('Invalid choice. Please enter Rock, Paper, or Scissors.'); // Show an alert for invalid input
-          }
-        }
-  
-      // Get a random choice for the computer
-      const computerSelection = getComputerChoice();
-  
-      // Play the round and display the result
-      const result = playRound(playerSelection, computerSelection);
-      console.log(`Round ${round}: ${result}`);
-  
-      // Update the scores
-      if (result.includes('Win')) {
-        playerScore++;
-      } else if (result.includes('Lose')) {
-        computerScore++;
-      }
-    }
-  
-    // Determine the overall winner
-    let winner;
+function announceWinner() {
+    const resultsDiv = document.getElementById('results');
+    const scoreDiv = document.getElementById('score');
+
     if (playerScore > computerScore) {
-      winner = "You Win!";
+        resultsDiv.textContent = "You Win the Game!";
     } else if (computerScore > playerScore) {
-      winner = "Computer Wins!";
+        resultsDiv.textContent = "Computer Wins the Game!";
     } else {
-      winner = "It's a Tie!";
+        resultsDiv.textContent = "It's a Tie!";
     }
-  
-    // Display the final scores and winner
-    console.log(`Final Score - You: ${playerScore}, Computer: ${computerScore}`);
-    console.log(winner);
+
+    // Disable the buttons to prevent further play
+    document.getElementById('rock').disabled = true;
+    document.getElementById('paper').disabled = true;
+    document.getElementById('scissors').disabled = true;
 }
-  
-  // Start the game
-  game();
+
+
   
