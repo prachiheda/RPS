@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>RPS</title>
-    <!-- <link rel="stylesheet" href="style.css"> -->
-  </head>
-  <body>
-    <button id="water">Water</button>
-    <button id="earth">Earth</button>
-    <button id="fire">Fire</button>
-    <button id="air">Air</button>
-    <div id="results"></div>
-    <div id="score">Score: Player 0 - Computer 0</div>
-	<script src="script.js"></script>
-  </body>
+    <title>Avatar RPS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Avatar RPS</h1>
+        <div class="elements">
+            <button id="water" class="element water">Water</button>
+            <button id="earth" class="element earth">Earth</button>
+            <button id="fire" class="element fire">Fire</button>
+            <button id="air" class="element air">Air</button>
+        </div>
+        <div id="results" class="results"></div>
+        <div id="score" class="score">Score: Player 0 - Computer 0</div>
+    </div>
+    <script src="script.js"></script>
+</body>
 </html>
