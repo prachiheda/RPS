@@ -3,40 +3,46 @@ let playerScore = 0;
 let computerScore = 0;
 const winningScore = 5;
 
-document.getElementById('rock').addEventListener('click', () => playRound('rock', getComputerChoice()));
-document.getElementById('paper').addEventListener('click', () => playRound('paper', getComputerChoice()));
-document.getElementById('scissors').addEventListener('click', () => playRound('scissors', getComputerChoice()));
+document.getElementById('water').addEventListener('click', () => playRound('water', getComputerChoice()));
+document.getElementById('earth').addEventListener('click', () => playRound('earth', getComputerChoice()));
+document.getElementById('fire').addEventListener('click', () => playRound('fire', getComputerChoice()));
+document.getElementById('air').addEventListener('click', () => playRound('air', getComputerChoice()));
 
 function getComputerChoice() {
-    const randomNumber = Math.floor(Math.random() * 3);
+    const randomNumber = Math.floor(Math.random() * 4);
     switch (randomNumber) {
         case 0:
-          return 'rock';
+          return 'water';
         case 1:
-          return 'paper';
+          return 'earth';
         case 2:
-          return 'scissors';
+          return 'fire';
+        case 3:
+            return 'air';
       }
 }
 
 function playRound(playerChoice, computerSelection){
     const outcomes = {
-      rock: { beats: 'scissors', losesTo: 'paper' },
-      paper: { beats: 'rock', losesTo: 'scissors' },
-      scissors: { beats: 'paper', losesTo: 'rock' },
+        water: { beats: 'earth', losesTo: 'fire' },
+        earth: { beats: 'fire', losesTo: 'air' },
+        fire: { beats: 'air', losesTo: 'water' },
+        air: { beats: 'water', losesTo: 'earth' }
     };
 
     const resultsDiv = document.getElementById('results');
     const scoreDiv = document.getElementById('score');
 
-    if (playerChoice === computerSelection) {
+    if (playerChoice === computerSelection.toLowerCase()) {
         resultsDiv.textContent = "It's a tie!";
-      } else if (outcomes[playerChoice].beats === computerSelection) {
+    } else if (outcomes[playerChoice].beats === computerSelection.toLowerCase()) {
         resultsDiv.textContent = `You Win! ${playerChoice} beats ${computerSelection}`;
         playerScore++;
-      } else {
+    } else if (outcomes[computerSelection.toLowerCase()].beats === playerChoice) {
         resultsDiv.textContent = `You Lose! ${computerSelection} beats ${playerChoice}`;
         computerScore++;
+    } else {
+        resultsDiv.textContent = "No one wins, they are opposite elements.";
     }
 
     scoreDiv.textContent = `Score: Player ${playerScore} - Computer ${computerScore}`;
@@ -48,7 +54,6 @@ function playRound(playerChoice, computerSelection){
 
 function announceWinner() {
     const resultsDiv = document.getElementById('results');
-    const scoreDiv = document.getElementById('score');
 
     if (playerScore > computerScore) {
         resultsDiv.textContent = "You Win the Game!";
@@ -59,9 +64,10 @@ function announceWinner() {
     }
 
     // Disable the buttons to prevent further play
-    document.getElementById('rock').disabled = true;
-    document.getElementById('paper').disabled = true;
-    document.getElementById('scissors').disabled = true;
+    document.getElementById('water').disabled = true;
+    document.getElementById('earth').disabled = true;
+    document.getElementById('fire').disabled = true;
+    document.getElementById('air').disabled = true;
 }
 
 
